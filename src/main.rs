@@ -14,6 +14,11 @@ fn main() {
         .run();
 }
 
+// Change these values
+const SPEED: f32 = 1000.0;
+const AMOUNT: i32 = 50;
+const MAX_DIST: f32 = 200.0;
+
 #[derive(Component)]
 struct Dots {
     pos: (f32,f32),
@@ -23,9 +28,8 @@ struct Dots {
 #[derive(Component)]
 struct Lines;
 
-const SPEED: f32 = 100.0;
-const AMOUNT: i32 = 50;
-const MAX_DIST: f32 = 200.0;
+// Backend variables (dont change)
+const MAX_DIST_DIVIDED_BY_4: f32 = MAX_DIST/4.0;
 
 fn startup(mut commands: Commands,  windows: ResMut<Windows>) {
     let win = windows.get_primary().expect("no primary window");
@@ -104,11 +108,11 @@ fn update(mut commands: Commands, mut query: Query<(&mut Dots, &mut Transform)>,
                     transform: Transform {
                         translation: (Vec3::new(i.0.pos.0, i.0.pos.1, 0.0)+Vec3::new(x.0.pos.0, x.0.pos.1, 0.0))/2.0,
                         scale: Vec3::new(distance, 1.0, 0.0),
-                        rotation: Quat::from_rotation_z(1.0-(distance/MAX_DIST)),
+                        //rotation: Quat::from_rotation_z(1.0-(distance/MAX_DIST)),
                         ..Default::default()
                     },
                     sprite: Sprite {
-                        color: Color::rgba(1.0, 1.0, 1.0, (2.0-(4.0-(4.0*(1.0-(distance/MAX_DIST)))).sqrt())/2.0),
+                        color: Color::rgba(1.0, 1.0, 1.0, 1.0-((distance/MAX_DIST_DIVIDED_BY_4).sqrt()/2.0)),
                         ..Default::default()
                     },
                     ..Default::default()
