@@ -6,5 +6,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = { git = "https://github.com/rsk700/bevy.git", branch = "fix-transform-order-of-transforms", features = ["dynamic"] }
+bevy = { git = "https://github.com/rsk700/bevy.git", branch = "fix-transform-order-of-transforms"}
 rand = "0.8.4"
