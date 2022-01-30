@@ -15,7 +15,7 @@ fn main() {
 }
 
 // Change these values
-const SPEED: f32 = 1000.0;
+const SPEED: f32 = 100.0;
 const AMOUNT: i32 = 50;
 const MAX_DIST: f32 = 200.0;
 
@@ -103,12 +103,14 @@ fn update(mut commands: Commands, mut query: Query<(&mut Dots, &mut Transform)>,
         for x in query.iter() {
             let distance = (((i.0.pos.1-x.0.pos.1).abs()*(i.0.pos.1-x.0.pos.1).abs())+((i.0.pos.0-x.0.pos.0).abs()*(i.0.pos.0-x.0.pos.0).abs())).sqrt();
             if distance < MAX_DIST {
+                let diff = Vec3::new(i.0.pos.0, i.0.pos.1, 0.0)-Vec3::new(x.0.pos.0, x.0.pos.1, 0.0);
+                let angle = diff.y.atan2(diff.x); // Add/sub FRAC_PI here optionally
                 commands
                 .spawn_bundle(SpriteBundle {
                     transform: Transform {
                         translation: (Vec3::new(i.0.pos.0, i.0.pos.1, 0.0)+Vec3::new(x.0.pos.0, x.0.pos.1, 0.0))/2.0,
                         scale: Vec3::new(distance, 1.0, 0.0),
-                        //rotation: Quat::from_rotation_z(1.0-(distance/MAX_DIST)),
+                        rotation: Quat::from_rotation_z(angle),
                         ..Default::default()
                     },
                     sprite: Sprite {
